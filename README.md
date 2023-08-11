@@ -3,13 +3,10 @@
 ## Built with
 Symfony, twig, and css
 
-
-
 ## Installation
 
 ```shell
 git clone 
-cd todoTeam
 docker-compose up --build
 ```
 
