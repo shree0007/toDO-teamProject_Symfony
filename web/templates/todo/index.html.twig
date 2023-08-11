@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<body>
+		<div class="create">
+			<form method="post" action="{{ path('create_task') }}">
+				<input type="text" id="myInput" placeholder="activity" name="activity"/>
+				<button type="submit" class="addBtn">Add a task</button>
+			</form>
+      {% for flashMessage in app.flashes('error') %}
+        <div class="flash-error">{{ flashMessage }}</div>
+      {% endfor %}
+		</div>
+
+		<div class="task-table-container">
+			<table class="task-table">
+				<thead>
+					<tr>
+						<th>Task</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for task in tasks %}
+						<tr>
+							<td>
+								{% if task.status %}
+									<form method="post" action="{{ path('update_task', {'id': task.id}) }}">
+										<input type="text" name="activity" id="activity" value="{{ task.activity }}"/>
+										<button type="submit" class="updateBtn">Update</button>
+									</form>
+								{% else %}
+									<div class="task-edit-section">
+										<span class="task-list-item">{{ task.activity }}</span>
+
+										<a href="{{ path('toggle_edit_task', {'id': task.id}) }}" class="editBtn">Edit</a>
+
+									</div>
+								{% endif %}
+							</td>
+							<td class="actions">
+								<a onclick="return confirm('Are you sure to delete?')" href="{{ path('delete_task', {'id': task.id}) }}">
+									<div class="deleteBtn">Delete</div>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+{% endblock %}
